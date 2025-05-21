@@ -1,20 +1,25 @@
+import React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useColorScheme } from 'react-native';
+import { ThemeProvider } from './src/themes/ThemeContext';
+import { BackendProvider } from './src/api/BackendContext';
+import AppNavigator from './src/navigation/AppNavigator';
 
 export default function App() {
+  const isDarkMode = useColorScheme() === 'dark';
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <BackendProvider>
+        <ThemeProvider>
+          <NavigationContainer>
+            <StatusBar style={isDarkMode ? 'light' : 'dark'} />
+            <AppNavigator />
+          </NavigationContainer>
+        </ThemeProvider>
+      </BackendProvider>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
