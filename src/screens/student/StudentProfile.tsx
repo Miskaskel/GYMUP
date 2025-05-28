@@ -13,8 +13,9 @@ import {
 } from 'react-native';
 import { useTheme } from '../../themes/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
-import { ProfileCards } from '../../hooks/ProfileCards';
-import { AndressCards } from '../../hooks/AndressCards';
+import { ProfileCards } from '../../hooks/Profile/ProfileCards';
+import { AndressCards } from '../../hooks/Profile/AndressCards';
+import { MeasurementsCards} from '../../hooks/Profile/MeasurementsCards';
   
 const StudentProfile = () => {
   const { theme } = useTheme();
@@ -22,6 +23,7 @@ const StudentProfile = () => {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* HEADER*/}
         <View style={[styles.header, {backgroundColor: theme.colors.primary}]} /** HEADER */>
           <TouchableOpacity>
             <View style={styles.bordercontainer}>
@@ -44,6 +46,7 @@ const StudentProfile = () => {
 
         <ProfileCards/>
         <AndressCards/>
+        <MeasurementsCards/>
 
       </ScrollView>   
     </SafeAreaView>

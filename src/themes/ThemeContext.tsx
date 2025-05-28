@@ -19,6 +19,7 @@ export const lightTheme = {
     inputBackground: '#F5F5F5',
     inputText: '#212121',
     inputBorder: '#E0E0E0',
+    delbutton : '#FF6B6B',
   },
 };
 
@@ -39,6 +40,7 @@ export const darkTheme = {
     inputBackground: '#333333',
     inputText: '#FFFFFF',
     inputBorder: '#444444',
+    delbutton: '#B32222',
   },
 };
 
