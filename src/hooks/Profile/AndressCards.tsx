@@ -1,9 +1,7 @@
-// components/ProfileCard.tsx
-
 import React, { useCallback, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../themes/ThemeContext';
+import { useTheme } from '../../themes/ThemeContext';
 import { useAndressEditing } from './AndressEditing';
 import { useFocusEffect } from '@react-navigation/native';
 

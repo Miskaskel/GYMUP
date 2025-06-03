@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect,  } from 'react';
 import { useColorScheme } from 'react-native';
 
 // Definição dos temas claro e escuro
@@ -8,6 +8,7 @@ export const lightTheme = {
     secondary: '#007BFF',
     acento: '#6B3BCC',
     background: '#FFFFFF',
+    backgroundlinear: ['#2BAE66', '#007BFF'],
     card: '#F5F5F5',
     text: '#212121',
     border: '#E0E0E0',
@@ -19,6 +20,7 @@ export const lightTheme = {
     inputBackground: '#F5F5F5',
     inputText: '#212121',
     inputBorder: '#E0E0E0',
+    delbutton : '#FF6B6B',
   },
 };
 
@@ -28,6 +30,7 @@ export const darkTheme = {
     secondary: '#005FC1',
     acento: '#6B3BCC',
     background: '#121212',
+    backgroundlinear: ['#1F8C53', '#005FC1'],
     card: '#1E1E1E',
     text: '#FFFFFF',
     border: '#333333',
@@ -39,6 +42,7 @@ export const darkTheme = {
     inputBackground: '#333333',
     inputText: '#FFFFFF',
     inputBorder: '#444444',
+    delbutton: '#B32222',
   },
 };
 

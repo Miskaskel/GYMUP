@@ -1,9 +1,7 @@
-// components/ProfileCard.tsx
-
 import React, { useCallback, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../themes/ThemeContext';
+import { useTheme } from '../../themes/ThemeContext';
 import { useProfileEditing } from './ProfileEditing';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -79,7 +77,7 @@ export const ProfileCards = () => {
               <Text style={[styles.cardInfo, { color: theme.colors.text }]}>{Celular}</Text>
             )}
 
-            <Text style={[styles.cardSubtitle, { color: theme.colors.text }]}>Telefone 2</Text>
+            <Text style={[styles.cardSubtitle, { color: theme.colors.text }]}>Contato de Emergência</Text>
             {isEditingPerfil ? (
               <TextInput
                 style={[styles.cardInfo, styles.inputEditing]}

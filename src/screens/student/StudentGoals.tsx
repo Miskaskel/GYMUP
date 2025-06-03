@@ -108,12 +108,24 @@ const GoalItem = ({ goal, theme, onUpdate }: { goal: Goal, theme: any, onUpdate:
         </View>
       )}
       
-      <TouchableOpacity 
-        style={[styles.updateButton, { backgroundColor: theme.colors.secondary }]}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.updateButtonText}>Atualizar Progresso</Text>
-      </TouchableOpacity>
+      <View style={[styles.containerButton]}>
+        <TouchableOpacity 
+          style={[styles.updateButton, { backgroundColor: theme.colors.secondary }]}
+          onPress={() => setModalVisible(true)}
+        >
+          <Ionicons name="reload-outline" size={25} color={theme.colors.text} style={{opacity: 0.5, marginRight:5}} />
+          <Text style={styles.updateButtonText}>Atualizar Meta</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={[styles.DeleteButton, { backgroundColor: theme.colors.delbutton }]}
+        >
+          <Ionicons name="trash-outline" size={25} color={theme.colors.text} style={{opacity: 0.5, marginRight:5}} />
+          <Text style={styles.DeleteButtonText}>Excluir Meta</Text>
+        </TouchableOpacity>
+      </View>
+      
+      
       
       <Modal
         animationType="slide"
@@ -166,7 +178,7 @@ const GoalItem = ({ goal, theme, onUpdate }: { goal: Goal, theme: any, onUpdate:
       </Modal>
     </View>
   );
-};
+}  ;
 
 const StudentGoals = () => {
   const { theme } = useTheme();
@@ -219,7 +231,8 @@ const StudentGoals = () => {
           style={[styles.addButton, { backgroundColor: theme.colors.secondary }]}
           onPress={() => setModalVisible(true)}
         >
-          <Text style={styles.addButtonText}>+ Nova Meta</Text>
+          <Ionicons name="add-circle-outline" size={30} color={theme.colors.text} style={{opacity: 0.5, marginRight:2}} />
+          <Text style={styles.addButtonText}>Nova Meta</Text>
         </TouchableOpacity>
       </View>
       
@@ -356,10 +369,18 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 8,
   },
+  containerButton:{
+    flexDirection: 'row',
+    alignItems:'center',
+    justifyContent:'center',
+    flex:1,
+  },
   addButton: {
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   addButtonText: {
     color: 'white',
@@ -423,12 +444,30 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   updateButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent:'center',
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,
+    marginLeft: 5,
+    width: '50%', 
+  },
+  DeleteButton: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent:'center',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    marginLeft: 5,
+    width: '50%',
   },
   updateButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  DeleteButtonText: {
     color: 'white',
     fontWeight: 'bold',
   },
