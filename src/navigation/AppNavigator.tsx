@@ -10,12 +10,20 @@ import StudentFriends from '../screens/student/StudentFriends';
 import TrainerDashboard from '../screens/trainer/TrainerDashboard';
 import TrainerWorkouts from '../screens/trainer/TrainerWorkouts';
 import TrainerStudents from '../screens/trainer/TrainerStudents';
+import AuthenticationScreenStudent from '../screens/auth/AuthStudent';
 import { useTheme } from '../themes/ThemeContext';
 import StudentProfile from '../screens/student/StudentProfile';
 
 // Definição dos tipos para a navegação
 export type RootStackParamList = {
   Welcome: undefined;
+  AuthStudent: undefined;
+  StudentMain: undefined;
+  TrainerMain: undefined;
+};
+
+export type RootTabAuthStudentList = {
+  Authentication : undefined;
   StudentMain: undefined;
   TrainerMain: undefined;
 };
@@ -36,8 +44,11 @@ export type TrainerTabParamList = {
   Profile: undefined;
 };
 
+
+
 // Criação dos navegadores
 const Stack = createStackNavigator<RootStackParamList>();
+const AuthStudentStack = createStackNavigator<RootTabAuthStudentList>();
 const StudentTab = createBottomTabNavigator<StudentTabParamList>();
 const TrainerTab = createBottomTabNavigator<TrainerTabParamList>();
 
@@ -136,8 +147,10 @@ const AppNavigator = () => {
   return (
     <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen name="AuthStudent" component={AuthenticationScreenStudent} />
       <Stack.Screen name="StudentMain" component={StudentNavigator} />
       <Stack.Screen name="TrainerMain" component={TrainerNavigator} />
+ 
     </Stack.Navigator>
   );
 };

@@ -13,6 +13,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import { useTheme } from '../../themes/ThemeContext';
 import { StatusBar } from 'expo-status-bar';
+import { LinearGradient } from 'react-native-svg';
 
 type WelcomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Welcome'>;
 
@@ -44,15 +45,15 @@ const WelcomeScreen = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity 
           style={[styles.button, styles.trainerButton, { backgroundColor: theme.colors.secondary }]}
-          onPress={() => navigation.navigate('TrainerMain')}
+          onPress={() => navigation.navigate('AuthStudent')}
         >
           <Text style={styles.buttonText}>Trainer</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={[styles.button, styles.accountButton, { backgroundColor: theme.colors.primary }]}
-          onPress={() => navigation.navigate('StudentMain')}
-        >
+          onPress={() => navigation.navigate('AuthStudent')}
+        >AuthStudent
           <Text style={styles.buttonText}>My Account</Text>
         </TouchableOpacity>
       </View>

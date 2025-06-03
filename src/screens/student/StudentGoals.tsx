@@ -178,7 +178,7 @@ const GoalItem = ({ goal, theme, onUpdate }: { goal: Goal, theme: any, onUpdate:
       </Modal>
     </View>
   );
-};
+}  ;
 
 const StudentGoals = () => {
   const { theme } = useTheme();
