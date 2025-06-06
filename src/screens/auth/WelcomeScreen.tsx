@@ -52,8 +52,7 @@ const WelcomeScreen = () => {
         
         <TouchableOpacity 
           style={[styles.button, styles.accountButton, { backgroundColor: theme.colors.primary }]}
-          onPress={() => navigation.navigate('AuthStudent')}
-        >AuthStudent
+          onPress={() => navigation.navigate('AuthStudent')}>
           <Text style={styles.buttonText}>My Account</Text>
         </TouchableOpacity>
       </View>

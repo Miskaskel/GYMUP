@@ -12,33 +12,30 @@ export default function GoogleLoginButton() {
   const { theme, isDark, toggleTheme } = useTheme(); 
 
   return (
-    <View style={styles.container}>
-        <SimpleLineIcons.Button name="social-google"
-            backgroundColor={theme.colors.inputBackground}
-            color={theme.colors.text} // cor do texto do botão
-            style={styles.button}
-            onPress={loginWithGoogle}>
-            <Text style={[styles.ButtonText, { color: theme.colors.text }]}>Login with Google</Text>
+    <View>
+      <SimpleLineIcons.Button name="social-google"
+        backgroundColor={theme.colors.inputBackground}
+        color={theme.colors.text} // cor do texto do botão
+        style={styles.button}
+        onPress={loginWithGoogle}>
+        <Text style={[styles.ButtonText, { color: theme.colors.text }]}>Login with Google</Text>
       </SimpleLineIcons.Button>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   button: {
     borderRadius: 25,
-    width: '80%',
-    height: 46,
+    width: '100%',
+    height: 56,
     justifyContent: 'center',
     alignItems: 'center',
     textAlign:'center',
   },
   ButtonText: {
     alignItems:'center',
+    textAlign: 'center',
     fontSize: 16,
     fontWeight: 'bold',
   }

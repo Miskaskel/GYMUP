@@ -9,6 +9,7 @@ import {
   useColorScheme,
   TextInput,
 } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootTabAuthStudentList } from '../../navigation/AppNavigator';
@@ -29,52 +30,58 @@ const AuthenticationScreenStudent = () => {
       start={{ x: 0, y: 1 }}
       end={{ x: 1, y: 0 }}
       style={styles.container}
-   >
+    >
       <SafeAreaView style={styles.container}>
         <StatusBar style={isDark ? 'light' : 'dark'} />
-      
-        <View style={styles.logoContainer}>
-          <View>
-            <Image 
-              source={require('../../../assets/images/logo.png')} 
-              style={styles.logo} 
-              resizeMode="contain"
-            />
-          </View>
-        </View>
-      
-        <View style={[styles.contentContainer, { backgroundColor: theme.colors.background }]}>
-          <View style={styles.contentTitle}>
-            <Text style={[styles.title, { color: theme.colors.text }]}>Login</Text>
-            <Text style={[styles.subtitle, { color: theme.colors.text }]}>
-              Fill out the information below in order to acess your account
-            </Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.button,{ backgroundColor: theme.colors.inputBackground }]}>
-              <TextInput 
-                style={[{color: theme.colors.text}]}
-                placeholder="Email"
-                placeholderTextColor={theme.colors.accent}></TextInput>
-            </TouchableOpacity>
-        
-             <TouchableOpacity style={[styles.button,{ backgroundColor: theme.colors.inputBackground }]}>
-              <TextInput 
-                style={[{color: theme.colors.text}]}
-                placeholder="Password"
-                placeholderTextColor={theme.colors.accent}></TextInput>
-            </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.button,{ backgroundColor: theme.colors.primary}]}>
-              <Text style={[styles.subtitle, {color: theme.colors.text }]}>Login</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={styles.buttonGoogle}>
-              <GoogleLoginButton/>
-            </TouchableOpacity>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+              <View style={styles.logoContainer}>
+                <Image 
+                  source={require('../../../assets/images/logo.png')} 
+                  style={styles.logo} 
+                  resizeMode="contain"
+                />
+              </View>
 
-          </View>
-        </View>
+              <View style={[styles.contentContainer, { backgroundColor: theme.colors.background }]}>
+                <View style={styles.contentTitle}>
+                  <Text style={[styles.title, { color: theme.colors.text }]}>Login</Text>
+                  <Text style={[styles.subtitle, { color: theme.colors.text }]}>
+                    Fill out the information below in order to access your account
+                  </Text>
+                </View>
+
+                <View style={styles.buttonContainer}>
+                  <TextInput 
+                    style={[styles.button, { backgroundColor: theme.colors.inputBackground, color: theme.colors.accent }]}
+                    placeholder="Email"
+                    placeholderTextColor={theme.colors.accent}
+                  />
+
+                  <TextInput 
+                    style={[styles.button, { backgroundColor: theme.colors.inputBackground, color: theme.colors.accent }]}
+                    placeholder="Password"
+                    placeholderTextColor={theme.colors.accent}
+                    secureTextEntry
+                  />
+
+                  <TouchableOpacity style={[styles.button, { backgroundColor: theme.colors.primary }]}>
+                    <Text style={[styles.subtitle, { color: theme.colors.text }]}>Login</Text>
+                  </TouchableOpacity>
+
+                  <View>
+                    <GoogleLoginButton />
+                  </View>
+                </View>
+              </View>
+            </ScrollView>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </LinearGradient>
   );
@@ -104,7 +111,14 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginBottom: 80,
     alignItems: 'center',
-    justifyContent:'space-evenly',
+    justifyContent:'space-around',
+    padding: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Semi-transparent white backgroun
   },
   contentTitle:{
     alignItems:'center',
@@ -126,11 +140,12 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
-    height: 46,
+    height: 56,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
+    paddingHorizontal: 10,
   },
   cardInfo: {
     fontSize: 15,
@@ -154,13 +169,6 @@ const styles = StyleSheet.create({
   },
   themeToggleText: {
     fontSize: 14,
-  },
-  buttonGoogle: {
-    borderRadius: 25,
-    height: 46,
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign:'center',
   },
 });
 
