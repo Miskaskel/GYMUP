@@ -22,12 +22,12 @@ export default function GoogleLoginButton() {
   })
 
   return (
-    <View style={styles.container}>
-        <SimpleLineIcons.Button name="social-google"
-            backgroundColor={theme.colors.inputBackground}
-            color={theme.colors.text} // cor do texto do botão
-            style={styles.button}
-            onPress={async () => {
+    <View>
+      <SimpleLineIcons.Button name="social-google"
+        backgroundColor={theme.colors.inputBackground}
+        color={theme.colors.text} // cor do texto do botão
+        style={styles.button}
+        onPress={async () => {
               try {
                 await GoogleSignin.hasPlayServices()
                 const userInfo = await GoogleSignin.signIn()
@@ -52,27 +52,24 @@ export default function GoogleLoginButton() {
                 }
               }
             }}>
-            <Text style={[styles.ButtonText, { color: theme.colors.text }]}>Login with Google</Text>
+        <Text style={[styles.ButtonText, { color: theme.colors.text }]}>Login with Google</Text>
       </SimpleLineIcons.Button>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   button: {
     borderRadius: 25,
-    width: 325,
-    height: 46,
+    width: '100%',
+    height: 56,
     justifyContent: 'center',
     alignItems: 'center',
     textAlign:'center',
   },
   ButtonText: {
     alignItems:'center',
+    textAlign: 'center',
     fontSize: 16,
     fontWeight: 'bold',
   }
