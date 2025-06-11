@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useTheme } from '../themes/ThemeContext';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-google-signin/google-signin'
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
 import { supabase } from '../services/Supabase'
 // Função que pode ser usada em outro lugar
 export function loginWithGoogle() {
@@ -16,45 +13,47 @@ export function loginWithGoogle() {
 // Componente do botão
 export default function GoogleLoginButton() {
   const { theme, isDark, toggleTheme } = useTheme(); 
-  GoogleSignin.configure({
-    scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-    webClientId: '307953648432-1qi8vvct3cltj4nmickkujmnb45ts4ok.apps.googleusercontent.com',
-  })
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    clientId: '307953648432-1qi8vvct3cltj4nmickkujmnb45ts4ok.apps.googleusercontent.com'
+  });
+
+  useEffect(() => {
+    const loginWithGoogle = async () => {
+      if (response?.type === 'success') {
+        const idToken = response.authentication?.idToken;
+        if (!idToken) {
+          console.error('ID Token não disponível!');
+          return;
+        }
+
+        const { data, error } = await supabase.auth.signInWithIdToken({
+          provider: 'google',
+          token: idToken,
+        });
+
+        if (error) {
+          console.error('Erro Supabase:', error.message);
+        } else {
+          console.log('Usuário logado com sucesso:', data);
+        }
+      }
+    };
+
+    loginWithGoogle();
+  }, [response]);
 
   return (
-    <View>
-      <SimpleLineIcons.Button name="social-google"
-        backgroundColor={theme.colors.inputBackground}
-        color={theme.colors.text} // cor do texto do botão
-        style={styles.button}
-        onPress={async () => {
-              try {
-                await GoogleSignin.hasPlayServices()
-                const userInfo = await GoogleSignin.signIn()
-                if (userInfo.data.idToken) {
-                  const { data, error } = await supabase.auth.signInWithIdToken({
-                    provider: 'google',
-                    token: userInfo.data.idToken,
-                  })
-                  console.log(error, data)
-                } else {
-                  throw new Error('no ID token present!')
-                }
-              } catch (error: any) {
-                if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-                  // user cancelled the login flow
-                } else if (error.code === statusCodes.IN_PROGRESS) {
-                  // operation (e.g. sign in) is in progress already
-                } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-                  // play services not available or outdated
-                } else {
-                  // some other error happened
-                }
-              }
-            }}>
-        <Text style={[styles.ButtonText, { color: theme.colors.text }]}>Login with Google</Text>
-      </SimpleLineIcons.Button>
-    </View>
+    <SimpleLineIcons.Button
+      name="social-google"
+      backgroundColor="#fff"
+      onPress={() => {
+        promptAsync();
+      }}
+    >
+      <Text style={{ color: theme.colors.text }}>
+        Login with Google
+      </Text>
+    </SimpleLineIcons.Button>
   );
 }
 
