@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   View, 
   Text, 
@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   useColorScheme,
   TextInput,
+  Alert,
 } from 'react-native';
 import { KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -17,12 +18,93 @@ import { useTheme } from '../../themes/ThemeContext';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import  GoogleLoginButton  from '../../services/GoogleAuth';
+import { signIn, signUp, signInWithGoogle } from "../../services/Auth"
 
 type AuthenticationScreenStudentNavigationProp = StackNavigationProp<RootTabAuthStudentList, 'Authentication'>;
 
 const AuthenticationScreenStudent = () => {
   const navigation = useNavigation<AuthenticationScreenStudentNavigationProp>();
-  const { theme, isDark, toggleTheme } = useTheme();
+  const { theme, isDark, toggleTheme } = useTheme();  
+  // Estados para os campos de entrada
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSignUpMode, setIsSignUpMode] = useState(false);
+
+  // Função para lidar com o login
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos');
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      const result = await signIn(email, password);
+      
+      if (result.success) {
+        Alert.alert('Sucesso', result.message);
+        navigation.navigate('StudentMain');
+      } else {
+        Alert.alert('Erro', result.error);
+      }
+    } catch (error) {
+      Alert.alert('Erro', 'Ocorreu um erro inesperado');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Função para lidar com o registro
+  const handleSignUp = async () => {
+    if (!email || !password) {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos');
+      return;
+    }
+
+    if (password.length < 6) {
+      Alert.alert('Erro', 'A senha deve ter pelo menos 6 caracteres');
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      const result = await signUp(email, password);
+      
+      if (result.success) {
+        Alert.alert('Sucesso', result.message);
+        setIsSignUpMode(false); // Volta para o modo de login
+      } else {
+        Alert.alert('Erro', result.error);
+      }
+    } catch (error) {
+      Alert.alert('Erro', 'Ocorreu um erro inesperado');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Função para lidar com o login do Google
+  const handleGoogleLogin = async () => {
+    setIsLoading(true);
+    
+    try {
+      const result = await signInWithGoogle();
+      
+      if (result.success) {
+        Alert.alert('Sucesso', result.message);
+        // O redirecionamento será feito automaticamente pelo Supabase
+      } else {
+        Alert.alert('Erro', result.error);
+      }
+    } catch (error) {
+      Alert.alert('Erro', 'Ocorreu um erro inesperado');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <LinearGradient 
@@ -61,6 +143,8 @@ const AuthenticationScreenStudent = () => {
                     style={[styles.button, { backgroundColor: theme.colors.inputBackground, color: theme.colors.accent }]}
                     placeholder="Email"
                     placeholderTextColor={theme.colors.accent}
+                    value={email}
+                    onChangeText={setEmail}
                   />
 
                   <TextInput 
@@ -68,9 +152,13 @@ const AuthenticationScreenStudent = () => {
                     placeholder="Password"
                     placeholderTextColor={theme.colors.accent}
                     secureTextEntry
+                    value={password}
+                    onChangeText={setPassword}
                   />
 
-                  <TouchableOpacity style={[styles.button, { backgroundColor: theme.colors.primary }]}>
+                  <TouchableOpacity style={[styles.button, { backgroundColor: theme.colors.primary }]} 
+                    onPress={isSignUpMode ? handleSignUp : handleLogin}
+                    disabled={isLoading}>
                     <Text style={[styles.subtitle, { color: theme.colors.text }]}>Login</Text>
                   </TouchableOpacity>
 
